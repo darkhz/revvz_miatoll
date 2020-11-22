@@ -41,8 +41,6 @@
 #include <linux/platform_data/spi-mt65xx.h>
 #endif
 
-#define NVT_DEBUG 1
-
 //---GPIO number---
 #define NVTTOUCH_RST_PIN 87
 #define NVTTOUCH_INT_PIN 88
