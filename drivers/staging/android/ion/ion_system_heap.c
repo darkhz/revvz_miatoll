@@ -2,7 +2,7 @@
  * drivers/staging/android/ion/ion_system_heap.c
  *
  * Copyright (C) 2011 Google, Inc.
- * Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2011-2019, The Linux Foundation. All rights reserved.
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -116,13 +116,8 @@ void free_buffer_page(struct ion_system_heap *heap,
 			ion_page_pool_free_immediate(pool, page);
 		else
 			ion_page_pool_free(pool, page);
-
-		mod_node_page_state(page_pgdat(page), NR_UNRECLAIMABLE_PAGES,
-				    -(1 << pool->order));
 	} else {
 		__free_pages(page, order);
-		mod_node_page_state(page_pgdat(page), NR_UNRECLAIMABLE_PAGES,
-				    -(1 << order));
 	}
 }
 
@@ -322,10 +317,6 @@ static int ion_system_heap_allocate(struct ion_heap *heap,
 
 		sz = (1 << info->order) * PAGE_SIZE;
 
-		mod_node_page_state(
-				page_pgdat(info->page), NR_UNRECLAIMABLE_PAGES,
-				(1 << (info->order)));
-
 		if (info->from_pool) {
 			list_add_tail(&info->list, &pages_from_pool);
 		} else {
@@ -409,13 +400,11 @@ err_free_sg2:
 	buffer->private_flags |= ION_PRIV_FLAG_SHRINKER_FREE;
 
 	if (vmid > 0)
-		if (ion_hyp_unassign_sg(table, &vmid, 1, true, false))
-			goto err_free_table_sync;
+		ion_hyp_unassign_sg(table, &vmid, 1, true, false);
 
 	for_each_sg(table->sgl, sg, table->nents, i)
 		free_buffer_page(sys_heap, buffer, sg_page(sg),
 				 get_order(sg->length));
-err_free_table_sync:
 	if (nents_sync)
 		sg_free_table(&table_sync);
 err_free_sg:
