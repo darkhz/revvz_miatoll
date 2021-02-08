@@ -198,6 +198,9 @@ EXTRA_CFLAGS += -Wmaybe-uninitialized
 endif
 #EXTRA_CFLAGS += -Wmissing-prototypes
 
+EXTRA_CFLAGS += -Wno-error=format=
+EXTRA_CFLAGS += -Wno-error=format-extra-args
+
 ifeq ($(call cc-option-yn, -Wheader-guard),y)
 EXTRA_CFLAGS += -Wheader-guard
 endif

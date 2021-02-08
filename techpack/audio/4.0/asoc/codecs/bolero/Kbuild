@@ -133,6 +133,9 @@ ifeq ($(call cc-option-yn, -Wheader-guard),y)
 EXTRA_CFLAGS += -Wheader-guard
 endif
 
+EXTRA_CFLAGS += -Wno-error=format=
+EXTRA_CFLAGS += -Wno-error=format-extra-args
+
 ifeq ($(KERNEL_BUILD), 0)
 	ifeq ($(CONFIG_ARCH_ATOLL), y)
 		KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/4.0/ipc/Module.symvers
