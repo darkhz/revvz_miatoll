@@ -2,6 +2,10 @@
 #
 # Makefile for the HID driver
 #
+
+ccflags-y += -Iinclude/linux/
+ccflags-y += -Idrivers/hid/
+
 hid-y			:= hid-core.o hid-input.o
 hid-$(CONFIG_DEBUG_FS)		+= hid-debug.o
 
