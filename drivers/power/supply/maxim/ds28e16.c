@@ -33,6 +33,8 @@
 #include <linux/random.h>
 #include <linux/sched.h>
 
+#include <linux/printk_disable_msg.h>
+
 #define ds_info	pr_info
 #define ds_dbg	pr_debug
 #define ds_err	pr_err

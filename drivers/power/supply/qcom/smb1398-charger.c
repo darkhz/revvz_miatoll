@@ -24,6 +24,7 @@
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
 #include <linux/iio/consumer.h>
+#include <linux/printk_disable_msg.h>
 
 /* Status register definition */
 #define PERPH0_REVISION4		0x2603
