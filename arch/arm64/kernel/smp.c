@@ -64,6 +64,8 @@
 #include <soc/qcom/scm.h>
 #include <soc/qcom/lpm_levels.h>
 
+#include <linux/printk_disable_msg.h>
+
 #define CREATE_TRACE_POINTS
 #include <trace/events/ipi.h>
 
